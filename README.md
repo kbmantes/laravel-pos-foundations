@@ -1,6 +1,6 @@
 # Laravel POS Foundations
 
-A basic Point-of-Sale application created using Laravel 12 for the IT0049 Web System Technologies activity.
+A Laravel Point-of-Sale foundations application using MySQL migrations, seeders, Eloquent models, controllers, and Blade views.
 
 ## Features
 
@@ -8,22 +8,23 @@ A basic Point-of-Sale application created using Laravel 12 for the IT0049 Web Sy
 - About page
 - Customer Accounts page
 - User Accounts page
-- Shared navigation
-- Static PHP arrays for temporary customer and user records
-- Blade templates and reusable layout
+- MySQL database
+- Customer and user migrations
+- Sample data seeder
+- Eloquent model retrieval
+- Shared Blade navigation
 
 ## Requirements
 
 - PHP 8.2 or higher
 - Composer
+- MySQL
 - Laravel
-- A web browser
 
-## Installation
+## Setup
 
 1. Clone or download this repository.
-2. Open Command Prompt in the project folder.
-3. Install the dependencies:
+2. Open the project folder in Command Prompt:
 
 ```bash
-composer install
+cd laravel-pos-foundations
