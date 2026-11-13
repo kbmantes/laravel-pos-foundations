@@ -1,102 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ $title ?? 'Laravel POS' }}</title>
+        <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.bunny.net">
+        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f4f7fb;
-            color: #243247;
-        }
+        <!-- Scripts -->
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    </head>
+    <body class="font-sans antialiased">
+        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+            @include('layouts.navigation')
 
-        nav {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-            padding: 18px 8%;
-            background: #1e3a5f;
-        }
+            <!-- Page Heading -->
+            @isset($header)
+                <header class="bg-white dark:bg-gray-800 shadow">
+                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                        {{ $header }}
+                    </div>
+                </header>
+            @endisset
 
-        nav a {
-            color: white;
-            text-decoration: none;
-        }
-
-        nav .brand {
-            margin-right: auto;
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        main {
-            width: 86%;
-            max-width: 1100px;
-            min-height: 75vh;
-            margin: 35px auto;
-            padding: 30px;
-            background: white;
-            border-radius: 10px;
-        }
-
-        h1 {
-            color: #1e3a5f;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        th,
-        td {
-            padding: 12px;
-            border-bottom: 1px solid #ddd;
-            text-align: left;
-        }
-
-        th {
-            color: white;
-            background: #1e3a5f;
-        }
-
-        tr:nth-child(even) {
-            background: #f5f7fa;
-        }
-
-        footer {
-            padding: 20px;
-            color: white;
-            text-align: center;
-            background: #1e3a5f;
-        }
-    </style>
-</head>
-
-<body>
-    <nav>
-        <a class="brand" href="{{ route('home') }}">Laravel POS</a>
-        <a href="{{ route('home') }}">Home</a>
-        <a href="{{ route('about') }}">About</a>
-        <a href="{{ route('customers.index') }}">Customers</a>
-        <a href="{{ route('users.index') }}">Users</a>
-    </nav>
-
-    <main>
-        @yield('content')
-    </main>
-
-    <footer>
-        <p>Laravel POS Foundations</p>
-    </footer>
-</body>
+            <!-- Page Content -->
+            <main>
+                {{ $slot ?? '' }}
+                @yield('content')
+            </main>
+        </div>
+    </body>
 </html>

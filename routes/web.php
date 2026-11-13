@@ -1,21 +1,33 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PageController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
 
-Route::get('/', [PageController::class, 'home'])->name('home');
+Route::get('/', function () {
+    return view('welcome');
+});
 
-Route::get('/about', [PageController::class, 'about'])->name('about');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/customers', [CustomerController::class, 'index'])
-    ->name('customers.index');
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])
+        ->name('profile.edit');
 
-Route::get('/users', [UserController::class, 'index'])
-    ->name('users.index');
-Route::resource('customers', CustomerController::class)
-    ->only(['index', 'create', 'store', 'edit', 'update']);
+    Route::patch('/profile', [ProfileController::class, 'update'])
+        ->name('profile.update');
 
-Route::resource('users', UserController::class)
-    ->only(['index', 'create', 'store', 'edit', 'update']);
+    Route::delete('/profile', [ProfileController::class, 'destroy'])
+        ->name('profile.destroy');
+
+    Route::resource('customers', CustomerController::class)
+        ->only(['index', 'create', 'store', 'edit', 'update']);
+
+    Route::resource('users', UserController::class)
+        ->only(['index', 'create', 'store', 'edit', 'update']);
+});
+
+require __DIR__.'/auth.php';
